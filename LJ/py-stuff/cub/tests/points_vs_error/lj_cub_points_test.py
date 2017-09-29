@@ -13,6 +13,7 @@ from resources import ljhelpers
 # for each n, output error graphs and calculate mean error in neighborhood of the minimum of l-j
 
 r_types = ['r','sqrt_r','r_sqr']
+mean_abs_error = {}
 
 for r_type in r_types:
 
@@ -41,7 +42,7 @@ for r_type in r_types:
     test_points = np.random.random_sample(n_test_points)*(stop-start) + start
     bcons = ((1,LJ.ev(start,1)),(1,LJ.ev(stop,1))) # evaluate first derivative of l-j at endpoints 
     
-    mean_abs_error = []
+    mean_abs_error[r_type] = []
     
     for n in n_vals:
         # build domain, range, interpolation spline
@@ -65,7 +66,7 @@ for r_type in r_types:
                 neighborhood_abs_error.append(abs_e)
             test_points_abs_error.append(abs_e)
             test_points_rel_error.append(rel_e)
-        mean_abs_error.append(sum(neighborhood_abs_error)/len(neighborhood_abs_error))
+        mean_abs_error[r_type].append(sum(neighborhood_abs_error)/len(neighborhood_abs_error))
     
         f, ax = plt.subplots(4, sharex=True)
         f.set_size_inches(11,8.5)
@@ -96,8 +97,8 @@ for r_type in r_types:
     e_plot.set_title('Mean Absolute Error Around Minimum in '+r_type)
     e_plot.set_xlabel('Number of Interpolation Points')
     e_plot.set_ylabel('Mean Absolute Error')
-    e_plot.semilogy(n_vals,mean_abs_error,'b-o')
-    e_plot.table(cellText=[n_vals,["%.1e" % x for x in mean_abs_error]],
+    e_plot.semilogy(n_vals,mean_abs_error[r_type],'b-o')
+    e_plot.table(cellText=[n_vals,["%.1e" % x for x in mean_abs_error[r_type]]],
                           rowLabels=['n','Error'],
                           cellLoc = 'center', rowLoc = 'center',
                           bbox=[0, -.4, 1, .2],
@@ -107,3 +108,23 @@ for r_type in r_types:
     e_fig.savefig(r_type + '/error.png')
     
     
+plt.close('all')
+e_fig = plt.figure()
+e_fig.set_size_inches(11,8.5)
+e_plot = e_fig.add_subplot(1,1,1)
+e_plot.set_title('Mean Absolute Error Around Minimum')
+e_plot.set_xlabel('Number of Interpolation Points')
+e_plot.set_ylabel('Mean Absolute Error')
+e_plot.semilogy(n_vals,mean_abs_error[r_types[0]],'b-o',label=r_types[0])
+e_plot.semilogy(n_vals,mean_abs_error[r_types[1]],'r-o',label=r_types[1])
+e_plot.semilogy(n_vals,mean_abs_error[r_types[2]],'c-o',label=r_types[2])
+e_plot.legend()
+e_plot.table(cellText=[n_vals,["%.1e" % x for x in mean_abs_error[r_types[0]]],["%.1e" % x for x in mean_abs_error[r_types[1]]],["%.1e" % x for x in mean_abs_error[r_types[2]]]],
+                      rowLabels=['n',r_types[0],r_types[1],r_types[2]],
+                      cellLoc = 'center', rowLoc = 'center',
+                      bbox=[0, -.4, 1, .2],
+                      loc="bottom",
+             )
+e_fig.subplots_adjust(bottom=0.3)
+e_fig.savefig('error_summary.png')
+
