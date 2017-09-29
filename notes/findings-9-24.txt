@@ -1,3 +1,5 @@
+9-24
+
 Spent several hours in the weeds with the cubic spline interpolation scheme detailed in chaper IV of de Boor's book.
 
 Implemented up to the banded matrix system in C.
@@ -5,3 +7,7 @@ Implemented up to the banded matrix system in C.
 Around this point, I realized that when interpolating points from a continuously differentiable function, we don't need to do all the work of estimating the coefficients.
 
 Wrote up a quick poc in python and it seemed to work. Still need to compare error rates to SciPy implementation, but if this works, it will simplify implementation immensely.
+
+9-28
+
+Oscillation can get really bad when starting the interpolation on the steep part of the function, though it seems to stabilize when utilizing more than a critical number of points. It might make sense to do PCHIP on the steep part and regular cubics thereafter.
