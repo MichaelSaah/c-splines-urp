@@ -1,4 +1,5 @@
 import math
+
 class lj:
     def __init__(self,a,b,r_type):
         all_coeffs = {
@@ -22,12 +23,12 @@ class lj:
         else:
             raise ValueError('valid r_types are r, r_sqr, sqrt_r')
 
-
     def ev(self,x,order):
         if order in (0,1,2,3):
             return (self.a*self.coeffs[order][0])/math.pow(x,self.exps[0]+order) + (self.b*self.coeffs[order][1])/math.pow(x,self.exps[1]+order)
         else:
             raise ValueError("ev() needs an order value equal to 0, 1, 2 or 3")
+
     def min(self):
         if self.r_type == 'r':
             return math.pow(2*self.a/self.b,1/6)
@@ -36,13 +37,3 @@ class lj:
         elif self.r_type == 'sqrt_r':
             return math.pow(2*self.a/self.b,1/12)
 
-class Poly:
-    def __init__(self,coeffs,x0):
-        self.coeffs = coeffs
-        self.x0 = x0
-    def evaluate(self,x):
-        y = 0
-        for i,c in enumerate(self.coeffs):
-            y = y + (c*((x-self.x0)**i))
-        return y
-        

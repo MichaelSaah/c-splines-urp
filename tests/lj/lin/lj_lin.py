@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 A,B = 1.0,1.0
 lj = lambda r: (A/(r**12))-(B/(r**6)) 
 
-start,stop,n = .1,3,10000
+start,stop,n = .1,3,200
 n_test_points = 2000
 
 domain = np.linspace(start,stop,n)
