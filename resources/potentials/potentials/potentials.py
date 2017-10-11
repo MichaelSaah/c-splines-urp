@@ -47,9 +47,39 @@ class lj(base_potential):
         elif self.r_type == 'sqrt_r':
             return math.pow(2*self.a/self.b,1/12)
 
-#class buck:
-#    def __init__(self,a,b,c):
-        
+class buck(base_potential): # need to add derivatives
+    def __init__(self,a,b,c,r_type):
+        self.set_r_type(r_type)
+        self.a = a
+        self.b = b
+        self.c = c
 
+    def _ev(self,x,order):
+        return self.a*math.exp(-self.b*x) - (self.c/(x**6))
 
+    def min(self): # fill in mins
+        if self.r_type == 'r':
+            pass
+        elif self.r_type == 'r_sqr':
+            pass
+        elif self.r_type == 'sqrt_r':
+            pass        
 
+class born(base_potential): # need to add derivatives
+    def __init__(self,a,b,c,d,sigma)
+        self.set_r_type(r_type)
+        self.a = a
+        self.b = b
+        self.c = c
+        self.d = d
+
+    def _ev(self,x,order):
+        return self.a*math.exp(B*(self.sigma - x)) - (self.c/(x**6)) - (self.d/(x**8))
+
+    def min(self): # fill in mins
+        if self.r_type == 'r':
+            pass
+        elif self.r_type == 'r_sqr':
+            pass
+        elif self.r_type == 'sqrt_r':
+            pass        
