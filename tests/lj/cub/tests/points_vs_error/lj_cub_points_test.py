@@ -1,5 +1,5 @@
 import sys
-sys.path.append('/Users/Mike/Dropbox/TU-17-18/URPFall/LJ/py-stuff/cub/tests/')
+#sys.path.append('/Users/Mike/Dropbox/TU-17-18/URPFall/LJ/py-stuff/cub/tests/')
 
 import numpy as np
 from scipy import interpolate
@@ -8,7 +8,8 @@ pp = pprint.PrettyPrinter(indent=4)
 import matplotlib.pyplot as plt
 import sys
 import math
-from resources import ljhelpers
+#from resources import ljhelpers
+import potentials
 
 # for each n, output error graphs and calculate mean error in neighborhood of the minimum of l-j
 
@@ -19,7 +20,7 @@ for r_type in r_types:
 
     # setup
     A,B = 1.0,1.0
-    LJ = ljhelpers.lj(A,B,r_type)
+    LJ = potentials.lj(A,B,r_type)
     lj_min = LJ.min()
     window_size = 0.2
     if r_type == 'sqrt_r':
